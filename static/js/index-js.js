@@ -11,21 +11,30 @@ $(document).ready(function(){
 
     $("#loginForm").submit(function(event) {
         event.preventDefault();
-        // Cookies.set("username", "testUser");
-        // Cookies.set("token", "123455");
-        // $("#currentUsername").text(Cookies.get("username"));
-        // $("#loginForm").hide();
-        // $("#profileOptions").show();
         $.post("http://localhost:5000/login",
             {username : $("#usernameInput").val(),
                 passwd : $("#passwordInput").val()
             })
             .done(function(result){
+                var code = result['code'];
+                if (code === '200') {
+                    $("#loginForm").hide();
+                    $("#currentUsername").text(Cookies.get('userName'));
+                    $("#profileOptions").show();
+                } else if (code === '201') {
+                    alert("password not correct.");
+                    $("#usernameInput").val('');
+                    $("#passwordInput").val('');
+                } else {
+                    alert("server error.");
+                    $("#usernameInput").val('');
+                    $("#passwordInput").val('');
+                }
+                
                 console.log(result['code']);
                 console.log(Cookies.get('userName'));
                 console.log(Cookies.get('userID'));
                 console.log(Cookies.get('token'));
-                alert(Cookies.get('token'));
             })
             .fail(function(xhr, textStatus, errorThrown){
                 console.log(xhr.statusText);
@@ -40,20 +49,5 @@ $(document).ready(function(){
         $("#currentUsername").text("Nobody");
         $("#loginForm").show();
         $("#profileOptions").hide();
-        // $.post("http://",
-        //     {username : $("#usernameInput").val().trim(),
-        //         password: $("passwordInput").val().trim()
-        //     })
-        //     .done(function(result){
-        //         alert("success" + result["result"]);
-        //         result['token'];
-        //         result['username'];
-        //     })
-        //     .fail(function(xhr, textStatus, errorThrown){
-        //         console.log(xhr.statusText);
-        //         console.log(textStatus);
-        //         console.log(errorThrown);
-        //     });
     });
-
 });

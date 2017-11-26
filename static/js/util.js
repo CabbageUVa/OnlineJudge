@@ -1,4 +1,3 @@
-
 function clearCookies() {
     Cookies.remove('username');
     Cookies.remove('token');
