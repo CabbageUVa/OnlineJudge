@@ -52,7 +52,7 @@ def match(testout, ans):
 
 
 def test(content, Q_ID, cursor):
-    code = {0:'Wrong answer', 1: 'AC!', 200:'Success',404:'file not found',400:'Compile error',408:'Timeout'}
+    code = {0:'Wrong answer', 1: 'Accepted!', 200:'Success',404:'file not found',400:'Compile error',408:'Timeout'}
 
     cursor.callproc('sp_getCodeAndTest', (str(Q_ID)))
     data = cursor.fetchall()
@@ -63,9 +63,10 @@ def test(content, Q_ID, cursor):
 
     rand = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(8))
     # prepare code and test output
-    dir_path = "./code/" + rand + ""
+    dir_path = "./code/" + rand
     dir_testOutput = dir_path + "/ans.txt"
     dir_file = dir_path + "/main.cpp"
+    subprocess.call('mkdir -p ' + dir_path, shell=True)
     f = open(dir_file, 'w')
     g = open(dir_testOutput, 'w')
     f.write(temp_file)

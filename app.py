@@ -129,8 +129,8 @@ def compile():
             cursor.close()
             token = register_token(userID)
             response = make_response(jsonify(code=valid, result=result))
-            response.set_cookie('token', token, max_age=60 * 60 * 1000)
-            response.set_cookie('userID', str(userID), max_age=60 * 60 * 1000)
+            response.set_cookie('token', token, max_age=30 * 60 * 1000)
+            response.set_cookie('userID', str(userID), max_age=30 * 60 * 1000)
         response = set_header(response)
         return response
 
