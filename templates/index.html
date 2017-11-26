@@ -31,7 +31,7 @@
 
             <button class="btn btn-outline-success mr-sm-2" type="submit" id ="loginButton">Log in</button>
 
-            <button type="button" class="btn btn-outline-success my-2 my-sm-0" data-toggle="modal" data-target="#signUpModal">Sign up</button>
+            <button id="signupButton1" type="button" class="btn btn-outline-success my-2 my-sm-0" data-toggle="modal" data-target="#signUpModal">Sign up</button>
             <!-- The Sign Up Modal -->
         </form>
         <ul class="navbar-nav ml-auto" id = "profileOptions">
@@ -62,7 +62,7 @@
                 <div class="carousel-caption text-left">
                     <h1>Level up our coding skills</h1>
                     <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                    <p><a class="btn btn-lg btn-primary" data-toggle="modal" data-target="#signUpModal" role="button">Sign up today</a></p>
+                    <p><a id = "signupButton2" class="btn btn-lg btn-primary" onclick="showSignUpModal()" data-target="#signUpModal" role="button">Sign up today</a></p>
                 </div>
             </div>
         </div>
@@ -106,7 +106,7 @@
         <div class="modal-content">
             <!-- Modal body -->
             <div class="modal-body">
-                <form>
+                <form id = "registerForm">
                     <div class="form-group">
                         <label for="emailSignup">Email Address</label>
                         <input type="email" class="form-control" id="emailSignup" placeholder="Email address" required autofocus>

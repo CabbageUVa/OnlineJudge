@@ -103,6 +103,7 @@ def signUp():
                 response = set_header(response)
                 return response
         except Exception as e:
+            print e
             response = make_response(jsonify(code='203'))
             response = set_header(response)
             return response

@@ -1,12 +1,14 @@
 function clearCookies() {
-    Cookies.remove('username');
+    Cookies.remove('userName');
+    Cookies.remove('userID');
     Cookies.remove('token');
 }
 
 function isLoggedIn() {
-    var username = Cookies.get('username');
+    var username = Cookies.get('userName');
     var token = Cookies.get('token');
-    if (username && token) {
+    var userID = Cookies.get('userID');
+    if (username && token && userID) {
         console.log("log");
         return username;
     } else {

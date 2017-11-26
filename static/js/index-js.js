@@ -1,4 +1,12 @@
 
+function showSignUpModal() {
+    if(isLoggedIn()) {
+        alert("Please log out first");
+    } else {
+        $('#signUpModal').modal('show');
+    }
+}
+
 $(document).ready(function(){
     var username = isLoggedIn();
     if (username === undefined) {
@@ -6,6 +14,7 @@ $(document).ready(function(){
         $("#profileOptions").hide();
     } else {
         $("#loginForm").hide();
+        $("#currentUsername").text(Cookies.get('userName'));
         $("#profileOptions").show();
     }
 
@@ -22,7 +31,7 @@ $(document).ready(function(){
                     $("#currentUsername").text(Cookies.get('userName'));
                     $("#profileOptions").show();
                 } else if (code === '201') {
-                    alert("password not correct.");
+                    alert("wrong password.");
                     $("#usernameInput").val('');
                     $("#passwordInput").val('');
                 } else {
@@ -43,6 +52,43 @@ $(document).ready(function(){
             });
 
     });
+    $("#registerForm").submit(function(event) {
+        event.preventDefault();
+        $.post("http://localhost:5000/signUp",
+            {username : $("#usernameSignup").val(),
+                email : $("#emailSignup").val(),
+                passwd : $("#passwordSignup").val()
+            })
+            .done(function(result){
+                var code = result['code'];
+                if (code === '200') {
+                    $("#loginForm").hide();
+                    $("#currentUsername").text(Cookies.get('userName'));
+                    $("#profileOptions").show();
+                } else if (code === '201') {
+                    alert("username has been taken.");
+                    $("#usernameSignup").val('');
+                } else if (code == '202') {
+                    alert("email has been taken.");
+                    $("#emailSignup").val('');
+                } else {
+                    alert("server error.");
+                    $("#usernameInput").val('');
+                    $("#passwordInput").val('');
+                }
+                console.log(result['code']);
+                console.log(Cookies.get('userName'));
+                console.log(Cookies.get('userID'));
+                console.log(Cookies.get('token'));
+            })
+            .fail(function(xhr, textStatus, errorThrown){
+                console.log(xhr.statusText);
+                console.log(textStatus);
+                console.log(errorThrown);
+            });
+
+    });
+
     $("#logoutButton").click(function(event) {
         event.preventDefault();
         clearCookies();
