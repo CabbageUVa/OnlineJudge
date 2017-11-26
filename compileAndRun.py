@@ -1,5 +1,4 @@
-import os, filecmp
-import subprocess
+import os, filecmp, random, string, subprocess
 
 def compile(file,lang):
     if lang == 'java':
@@ -62,7 +61,8 @@ def test(content, Q_ID, cursor):
     testOutput = data[0][3]                         # answer
     testNum = testCase.count('\n')                  # test number
 
-    # prepare code and testOutput
+    rand = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(8))
+    # prepare code and test output
     dir_path = "./code/" + rand + ""
     dir_testOutput = dir_path + "/ans.txt"
     dir_file = dir_path + "/main.cpp"
@@ -78,14 +78,16 @@ def test(content, Q_ID, cursor):
     timeout = '10'
 
     ret = compile(dir_file, lang)
-    if(ret != 200):
+    if ret != 200:
         return code[ret]
-    print "compile success"
+    print("compile success")
 
-    ret = run(dir_file, timeout, lang, output)
-    if(ret != 200):
-        return code[ret]
-    print "run success"
+    for i in range(testNum):
+        testcase = testCase.split('\n')[i]
+        ret = run(dir_file, testcase, timeout, lang, output)
+        if(ret != 200):
+            return code[ret]
+    print ("run success")
 
     ret = match(output, dir_testOutput)
     return code[ret]
