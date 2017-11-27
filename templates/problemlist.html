@@ -16,10 +16,10 @@
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="index.html">Homepage</a>
+                <a class="nav-link" href="{{ url_for('index') }}">Homepage</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="problemlist.html">Problem Set</a>
+                <a class="nav-link" href="{{ url_for('problemList') }}">Problem Set</a>
             </li>
         </ul>
         <form class="form-inline ml-auto" id = "loginForm">
@@ -27,7 +27,8 @@
             <input class="form-control mr-sm-2" type="password" placeholder="Password" id = "passwordInput" required>
 
             <button class="btn btn-outline-success mr-sm-2" type="submit" id ="loginButton">Log in</button>
-            <button type="button" class="btn btn-outline-success my-2 my-sm-0" data-toggle="modal" data-target="#signUpModal">Sign up</button>
+
+            <button id="signupButton1" type="button" class="btn btn-outline-success my-2 my-sm-0" data-toggle="modal" data-target="#signUpModal">Sign up</button>
             <!-- The Sign Up Modal -->
         </form>
         <ul class="navbar-nav ml-auto" id = "profileOptions">
@@ -36,21 +37,59 @@
                     Nobody
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Profile</a>
-                    <a class="dropdown-item" href="#">Log out</a>
+                    <a id = "profileButton" class="dropdown-item" href="#">Profile</a>
+                    <a id = "logoutButton" class="dropdown-item" href="#">Log out</a>
                 </div>
             </li>
         </ul>
     </div>
 </nav>
+<div class="modal fade" id="signUpModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form id = "registerForm">
+                    <div class="form-group">
+                        <label for="emailSignup">Email Address</label>
+                        <input type="email" class="form-control" id="emailSignup" placeholder="Email address" required autofocus>
+                    </div>
+                    <div class="form-group">
+                        <label for="usernameInput">Username</label>
+                        <input type="text" class="form-control" id="usernameSignup" placeholder="Username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="passwordSignup">Password</label>
+                        <input type="password" class="form-control" id="passwordSignup" placeholder="Password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="passwordSignupRepeat">Confirm Password</label>
+                        <input type="password" class="form-control" id="passwordSignupRepeat" placeholder="Confirm password" required>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input id="signUpCheckbox" type="checkbox" value="agreeTerm" required> I agree to the Terms of Service
+                        </label>
+                    </div>
+                    <button class="btn btn-primary btn-block" type="submit">Sign in</button>
 
+                </form>
+            </div>
 
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 <script   src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-<script src="js/util.js"></script>
-<script src="js/problemlist-js.js"></script>
+<script src="{{ url_for('static', filename='js/util.js') }}"></script>
+<script src="{{ url_for('static', filename='js/problemlist-js.js') }}"></script>
 </body>
 </html>

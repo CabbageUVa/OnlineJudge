@@ -20,7 +20,7 @@ $(document).ready(function(){
 
     $("#loginForm").submit(function(event) {
         event.preventDefault();
-        $.post("http://localhost:5000/login",
+        $.post("http://localhost/login",
             {username : $("#usernameInput").val(),
                 passwd : $("#passwordInput").val()
             })
@@ -54,7 +54,7 @@ $(document).ready(function(){
     });
     $("#registerForm").submit(function(event) {
         event.preventDefault();
-        $.post("http://localhost:5000/signUp",
+        $.post("http://localhost/signUp",
             {username : $("#usernameSignup").val(),
                 email : $("#emailSignup").val(),
                 passwd : $("#passwordSignup").val()
@@ -65,6 +65,12 @@ $(document).ready(function(){
                     $("#loginForm").hide();
                     $("#currentUsername").text(Cookies.get('userName'));
                     $("#profileOptions").show();
+                    $("#usernameSignup").val('');
+                    $("#emailSignup").val('');
+                    $("#passwordSignup").val('');
+                    $('#signUpCheckbox').prop('checked', false);
+                    $("#passwordSignupRepeat").val('');
+                    $('#signUpModal').modal('hide');
                 } else if (code === '201') {
                     alert("username has been taken.");
                     $("#usernameSignup").val('');

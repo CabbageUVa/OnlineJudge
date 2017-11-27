@@ -22,6 +22,9 @@ conn = mysql.connect()
 def index():
     return render_template('index.html')
 
+@app.route('/problemList', methods=['GET', 'POST'])
+def problemList():
+    return render_template('problemlist.html')
 
 @app.route('/login', methods=['POST'])
 def userLogin():
@@ -166,4 +169,4 @@ def set_header(resp):
 
 
 if __name__ == '__main__':
-    app.run(host='localhost')
+    app.run(host='localhost', port=80)
