@@ -63,7 +63,10 @@
 
         <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
             <h1>Dashboard</h1>
-
+            <div class="alert alert-primary alert-dismissable fade show" id = "loginAlert" style="display: none;">
+                <button type="button" class="close" id="hideAlertButton">&times;</button>
+                Log in to see your progress here.
+            </div>
             <section id = "progressBar" class="row text-center placeholders" style="display:none;">
                 <div class="col-6 col-sm-3 placeholder">
                     <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
@@ -89,7 +92,7 @@
 
             <h2>Problem List</h2>
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table id="problemTable" class="table table-striped">
                     <thead>
                     <tr>
                         <th>#</th>
@@ -99,12 +102,6 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1,001</td>
-                        <td>Lorem</td>
-                        <td>ipsum</td>
-                        <td>dolor</td>
-                    </tr>
                     </tbody>
                 </table>
             </div>

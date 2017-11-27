@@ -19,7 +19,7 @@ def validate_user(userID, token):
         return 202
 
 
-def register_token(userID):
+def register_token(userID, app):
     token = jwt.encode({'userID': userID,
                         'exp': datetime.utcnow() + timedelta(minutes=app.config.get('HAPYAK_JWT_LIFETIME', 60))},
                        app.config.get('JWT_KEY', SECRET_KEY))
@@ -35,10 +35,11 @@ def set_header(resp):
 
 def getUserProgress(cursor, userID):
     data = 0
-    if len(userID) > 0 and userID > 0:
+    if userID and userID > 0:
         cursor.callproc('sp_getUserProgress', (userID))
         data = cursor.fetchall()
-    return data[0]
+        data = data[0]
+    return data
 
 
 def set_cookie(response, token, userID, _username):
