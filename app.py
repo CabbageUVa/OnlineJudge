@@ -133,7 +133,7 @@ def signUp():
 
 @app.route('/uploader', methods=['GET', 'POST'])
 def compile():
-    code = {0:'Wrong answer', 1: 'Accepted!', 200:'Success',404:'file not found',400:'Compile error',408:'Timeout'}
+    msg = {0:'Wrong answer', 1: 'Accepted!', 200:'Success',404:'file not found',400:'Compile error',408:'Timeout'}
     if request.method == 'POST':
         try:
             userID = request.cookies.get('userID')
@@ -154,7 +154,7 @@ def compile():
                 cursor.commit()
                 cursor.close()
                 token = register_token(userID)
-                response = make_response(jsonify(code=valid, result=code[result]))
+                response = make_response(jsonify(code=valid, result=msg[result]))
                 response = set_cookie(response, token, userID, username)
             response = set_header(response)
             return response
