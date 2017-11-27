@@ -12,7 +12,7 @@ def validate_user(userID, token):
         if userID == user_info['userID']:
             return 200
         else:
-            return 202
+            return 201
     except ExpiredSignatureError as e:
         return 201
     except DecodeError as e:

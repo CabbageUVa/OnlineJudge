@@ -135,28 +135,35 @@ def signUp():
 def compile():
     code = {0:'Wrong answer', 1: 'Accepted!', 200:'Success',404:'file not found',400:'Compile error',408:'Timeout'}
     if request.method == 'POST':
-        userID = request.cookies.get('userID')
-        token = request.cookies.get('token')
-        username = request.cookies.get('userName')
-        data = request.form
-        code = data['code']
-        Q_ID = data['Q_ID']
+        try:
+            userID = request.cookies.get('userID')
+            token = request.cookies.get('token')
+            username = request.cookies.get('userName')
+            data = request.form
+            code = data['code']
+            Q_ID = data['Q_ID']
 
-        valid = validate_user(userID, token)
-        if valid != 200:
-            response = make_response(jsonify(code=valid))
-        else:
-            cursor = conn.cursor()
-            result = test(code,Q_ID,cursor)
-            flag = 1 if result == '1' else 0
-            cursor.callproc('sp_updateProgress', (userID, Q_ID, flag))
-            cursor.commit()
-            cursor.close()
-            token = register_token(userID)
-            response = make_response(jsonify(code=valid, result=code[result]))
-            response = set_cookie(response, token, userID, username)
-        response = set_header(response)
-        return response
+            valid = validate_user(userID, token)
+            if valid != 200:
+                response = make_response(jsonify(code=valid))
+            else:
+                cursor = conn.cursor()
+                result = test(code,Q_ID,cursor)
+                flag = 1 if result == '1' else 0
+                cursor.callproc('sp_updateProgress', (userID, Q_ID, flag))
+                cursor.commit()
+                cursor.close()
+                token = register_token(userID)
+                response = make_response(jsonify(code=valid, result=code[result]))
+                response = set_cookie(response, token, userID, username)
+            response = set_header(response)
+            return response
+
+        except Exception as e:
+            print(e)
+            response = make_response(jsonify(code='202'))
+            response = set_header(response)
+            return response
 
 
 @app.route('/problemDetail', methods=['GET', 'POST'])
@@ -174,8 +181,8 @@ def pDetail():
         response = make_response(jsonify(
             code='200', QID = data[0],
             title=data[1], description=data[2],
-            difficulty=data[3], submitted=data[4],
-            accepted=data[5], defaultCode=data[6]))
+            difficulty=data[3], pSubmitNum=data[4],
+            pAcceptNum=data[5], defaultCode=data[6]))
         response = set_header(response)
         if userID and userID > 0:
             response = set_cookie(response, token, userID, username)
