@@ -25,6 +25,10 @@ def index():
 def problemList():
     return render_template('problemlist.html')
 
+@app.route('/problem/<problemNumber>', methods=['GET', 'POST'])
+def problem(problemNumber):
+    return render_template('problem.html', problemNumber = problemNumber)
+
 @app.route('/getProblemList', methods=['GET', 'POST'])
 def getProblemList():
     try:

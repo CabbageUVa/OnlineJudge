@@ -2,13 +2,9 @@
 $(document).ready(function(){
     var username = isLoggedIn();
     if (username === undefined) {
-        $("#progressBar").hide();
-        $("#loginAlert").show();
         $("#loginForm").show();
         $("#profileOptions").hide();
     } else {
-        $("#progressBar").show();
-        $("#loginAlert").hide();
         $("#loginForm").hide();
         $("#currentUsername").text(Cookies.get('userName'));
         $("#profileOptions").show();
@@ -26,7 +22,6 @@ $(document).ready(function(){
                     $("#loginForm").hide();
                     $("#currentUsername").text(Cookies.get('userName'));
                     $("#profileOptions").show();
-                    $("#progressBar").show();
                     $("#loginAlert").hide();
                 } else if (code === '201') {
                     alert("wrong password.");
@@ -69,7 +64,6 @@ $(document).ready(function(){
                     $('#signUpCheckbox').prop('checked', false);
                     $("#passwordSignupRepeat").val('');
                     $('#signUpModal').modal('hide');
-                    $("#progressBar").show();
                     $("#loginAlert").hide();
                 } else if (code === '201') {
                     alert("username has been taken.");
@@ -101,33 +95,7 @@ $(document).ready(function(){
         $("#currentUsername").text("Nobody");
         $("#loginForm").show();
         $("#profileOptions").hide();
-        $("#progressBar").hide();
-        $("#loginAlert").show();
     });
-    $("#hideAlertButton").click(function(event) {
-        event.preventDefault();
-        $("#loginAlert").hide();
-    });
-
-    $.post("http://localhost/getProblemList")
-        .done(function(result){
-            var code = result['code'];
-            if (code === '200') {
-                var data = result['problemSet'];
-                var progress = result['progress'];
-                console.log(progress);
-                console.log(data);
-                console.log(typeof data);
-                for(var i = 0; i < data.length; i++) {
-                    $('#problemTable tbody').append('<tr><td>'+data[i][0]+'</td><td><a href='+problemPageUrl+data[i][0]+'>'+data[i][1]+'</a></td><td>'+((data[i][3]/data[i][2])*100).toFixed(1)+'%</td><td>'+data[i][4]+'</td></tr>');
-                }
-            } else {
-                alert("server error.");
-            }
-        })
-        .fail(function(xhr, textStatus, errorThrown){
-            console.log(xhr.statusText);
-            console.log(textStatus);
-            console.log(errorThrown);
-        });
+    $("#testText").text(problemNumber);
+    console.log("test: " + problemNumber);
 });
