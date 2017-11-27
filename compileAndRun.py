@@ -52,8 +52,6 @@ def match(testout, ans):
 
 
 def test(content, Q_ID, cursor):
-    code = {0:'Wrong answer', 1: 'Accepted!', 200:'Success',404:'file not found',400:'Compile error',408:'Timeout'}
-
     cursor.callproc('sp_getCodeAndTest', (str(Q_ID)))
     data = cursor.fetchall()
     temp_file = data[0][0] + content + data[0][1]   # code
@@ -80,15 +78,15 @@ def test(content, Q_ID, cursor):
 
     ret = compile(dir_file, lang)
     if ret != 200:
-        return code[ret]
+        return ret
     print("compile success")
 
     for i in range(testNum):
         testcase = testCase.split('\n')[i]
         ret = run(dir_file, testcase, timeout, lang, output)
         if(ret != 200):
-            return code[ret]
+            return ret
     print ("run success")
 
     ret = match(output, dir_testOutput)
-    return code[ret]
+    return ret

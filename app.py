@@ -21,6 +21,7 @@ conn = mysql.connect()
 def index():
     return render_template('index.html')
 
+
 @app.route('/problemList', methods=['GET', 'POST'])
 def problemList():
     return render_template('problemlist.html')
@@ -28,6 +29,7 @@ def problemList():
 @app.route('/problem/<problemNumber>', methods=['GET', 'POST'])
 def problem(problemNumber):
     return render_template('problem.html', problemNumber = problemNumber)
+
 
 @app.route('/getProblemList', methods=['GET', 'POST'])
 def getProblemList():
@@ -53,6 +55,7 @@ def getProblemList():
         response = make_response(jsonify(code = '202'))
         response = set_header(response)
         return response
+
 
 @app.route('/login', methods=['POST'])
 def userLogin():
@@ -130,6 +133,7 @@ def signUp():
 
 @app.route('/uploader', methods=['GET', 'POST'])
 def compile():
+    code = {0:'Wrong answer', 1: 'Accepted!', 200:'Success',404:'file not found',400:'Compile error',408:'Timeout'}
     if request.method == 'POST':
         userID = request.cookies.get('userID')
         token = request.cookies.get('token')
@@ -144,10 +148,41 @@ def compile():
         else:
             cursor = conn.cursor()
             result = test(code,Q_ID,cursor)
+            flag = 1 if result == '1' else 0
+            cursor.callproc('sp_updateProgress', (userID, Q_ID, flag))
+            cursor.commit()
             cursor.close()
             token = register_token(userID)
-            response = make_response(jsonify(code=valid, result=result))
+            response = make_response(jsonify(code=valid, result=code[result]))
             response = set_cookie(response, token, userID, username)
+        response = set_header(response)
+        return response
+
+
+@app.route('/problemDetail', methods=['GET', 'POST'])
+def pDetail():
+    try:
+        userID = request.cookies.get('userID')
+        token = request.cookies.get('token')
+        username = request.cookies.get('userName')
+        QID = request.form['QID']
+
+        cursor = conn.cursor()
+        cursor.callproc('sp_getProblemDetail', (QID))
+        data = cursor.fetchall()[0]
+        cursor.close()
+        response = make_response(jsonify(
+            code='200', QID = data[0],
+            title=data[1], description=data[2],
+            difficulty=data[3], submitted=data[4],
+            accepted=data[5], defaultCode=data[6]))
+        response = set_header(response)
+        if userID and userID > 0:
+            response = set_cookie(response, token, userID, username)
+        return response
+    except Exception as e:
+        print(e)
+        response = make_response(jsonify(code = '202'))
         response = set_header(response)
         return response
 
