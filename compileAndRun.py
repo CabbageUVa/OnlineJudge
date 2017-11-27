@@ -73,7 +73,7 @@ def test(content, Q_ID, cursor):
     g.write(testOutput)
     f.close()
     g.close()
- 
+
     lang = 'cpp'
     output = dir_path + "/out.txt"
     timeout = '10'
