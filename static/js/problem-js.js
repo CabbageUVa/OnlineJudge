@@ -89,6 +89,29 @@ $(document).ready(function(){
 
     });
 
+    $("#submitCode").click(function(e){
+        e.preventDefault();
+        $.post("http://localhost/uploader",
+            { code : cppEditor.getValue(),
+                Q_ID : problemNumber})
+            .done(function(result){
+                var code = result['code'];
+                if (code === '200') {
+                    alert("pass");
+                } else if (code === '201') {
+                    clearCookies();
+                    alert("relogin");
+                } else {
+                    alert("server error.");
+                }
+            })
+            .fail(function(xhr, textStatus, errorThrown){
+                console.log(xhr.statusText);
+                console.log(textStatus);
+                console.log(errorThrown);
+            });
+    });
+
     $("#logoutButton").click(function(event) {
         event.preventDefault();
         clearCookies();
@@ -96,11 +119,35 @@ $(document).ready(function(){
         $("#loginForm").show();
         $("#profileOptions").hide();
     });
-    $("#testText").text(problemNumber);
-    console.log("test: " + problemNumber);
     var cppEditor = CodeMirror.fromTextArea(document.getElementById("cpp-code"), {
         lineNumbers: true,
         matchBrackets: true,
         mode: "text/x-c++src"
     });
+    $.post("http://localhost/problemDetail",
+        {QID : problemNumber} )
+        .done(function(result){
+            var code = result['code'];
+            if (code === '200') {
+                var title = result['title'];
+                var description = result['description'];
+                var difficulty = result['difficulty'];
+                var pSubmitNum = result['pSubmitNum'];
+                var pAcceptNum = result['pAcceptNum'];
+                var defaultCode = result['defaultCode'];
+                console.log(title);
+                console.log(description);
+                console.log(defaultCode);
+                $("#title").text(title);
+                $("#description").append(description);
+                cppEditor.setValue(defaultCode);
+            } else {
+                alert("server error.");
+            }
+        })
+        .fail(function(xhr, textStatus, errorThrown){
+            console.log(xhr.statusText);
+            console.log(textStatus);
+            console.log(errorThrown);
+        });
 });

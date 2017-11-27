@@ -65,7 +65,7 @@
         </nav>
 
         <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-            <h1>Problem Title</h1>
+            <h1 id = "title">Problem Title</h1>
             <div class="alert alert-primary alert-dismissable fade show" id = "loginAlert" style="display: none;">
                 <button type="button" class="close" id="hideAlertButton">&times;</button>
                 Log in to submit and test your code.
@@ -74,30 +74,8 @@
             <div id ="description">
 
             </div>
-            <div><textarea id="cpp-code">
-    class Solution {
-public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        unordered_map<int, int> HashMap;
-        int NumToFind;
-
-        for( int i=0;i<nums.size();i++)
-        {
-            NumToFind = target - nums[i];
-
-            if( HashMap.find(NumToFind) != HashMap.end() )
-            {
-                vector<int> Indice = {HashMap[NumToFind],i};
-                return Indice;
-            }
-            else
-                HashMap[nums[i]] = i;
-
-        }
-    }
-};</textarea></div>
+            <div><textarea id="cpp-code">foo</textarea></div>
             <input type="submit" id="submitCode" value="Submit">
-            <h2 id = "result">Two Sum</h2>
         </main>
     </div>
 </div>
