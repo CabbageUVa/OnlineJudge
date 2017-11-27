@@ -1,9 +1,11 @@
 $(document).ready(function(){
     var username = isLoggedIn();
     if (username === undefined) {
+        $("#progressBar").hide();
         $("#loginForm").show();
         $("#profileOptions").hide();
     } else {
+        $("#progressBar").show();
         $("#loginForm").hide();
         $("#currentUsername").text(Cookies.get('userName'));
         $("#profileOptions").show();
@@ -21,6 +23,7 @@ $(document).ready(function(){
                     $("#loginForm").hide();
                     $("#currentUsername").text(Cookies.get('userName'));
                     $("#profileOptions").show();
+                    $("#progressBar").show();
                 } else if (code === '201') {
                     alert("wrong password.");
                     $("#usernameInput").val('');
@@ -62,6 +65,7 @@ $(document).ready(function(){
                     $('#signUpCheckbox').prop('checked', false);
                     $("#passwordSignupRepeat").val('');
                     $('#signUpModal').modal('hide');
+                    $("#progressBar").show();
                 } else if (code === '201') {
                     alert("username has been taken.");
                     $("#usernameSignup").val('');
@@ -92,5 +96,6 @@ $(document).ready(function(){
         $("#currentUsername").text("Nobody");
         $("#loginForm").show();
         $("#profileOptions").hide();
+        $("#progressBar").hide();
     });
 });

@@ -25,7 +25,7 @@
                 <a class="nav-link" href="{{ url_for('problemList') }}">Problem Set</a>
             </li>
         </ul>
-        <form class="form-inline ml-auto" id = "loginForm">
+        <form class="form-inline ml-auto" id = "loginForm" style="display:none;">
             <input class="form-control mr-sm-2" type="text" placeholder="Username" id = "usernameInput" required>
             <input class="form-control mr-sm-2" type="password" placeholder="Password" id = "passwordInput" required>
 
@@ -34,7 +34,7 @@
             <button id="signupButton1" type="button" class="btn btn-outline-success my-2 my-sm-0" data-toggle="modal" data-target="#signUpModal">Sign up</button>
             <!-- The Sign Up Modal -->
         </form>
-        <ul class="navbar-nav ml-auto" id = "profileOptions">
+        <ul class="navbar-nav ml-auto" id = "profileOptions" style="display:none;">
         <li class="nav-item dropdown">
             <a id ="currentUsername" class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Nobody

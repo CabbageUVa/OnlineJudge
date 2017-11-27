@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link href="{{ url_for('static', filename='css/dashboard.css')}}" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Problem Set</title>
 </head>
 <body>
+<header>
 <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
     <a class="navbar-brand" href="#">Online Judge</a>
     <!-- The Collapsible Navbar -->
@@ -22,7 +24,7 @@
                 <a class="nav-link" href="{{ url_for('problemList') }}">Problem Set</a>
             </li>
         </ul>
-        <form class="form-inline ml-auto" id = "loginForm">
+        <form class="form-inline ml-auto" id = "loginForm" style="display:none;">
             <input class="form-control mr-sm-2" type="text" placeholder="Username" id = "usernameInput" required>
             <input class="form-control mr-sm-2" type="password" placeholder="Password" id = "passwordInput" required>
 
@@ -31,7 +33,7 @@
             <button id="signupButton1" type="button" class="btn btn-outline-success my-2 my-sm-0" data-toggle="modal" data-target="#signUpModal">Sign up</button>
             <!-- The Sign Up Modal -->
         </form>
-        <ul class="navbar-nav ml-auto" id = "profileOptions">
+        <ul class="navbar-nav ml-auto" id = "profileOptions" style="display:none;">
             <li class="nav-item dropdown">
                 <a id ="currentUsername" class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Nobody
@@ -44,6 +46,71 @@
         </ul>
     </div>
 </nav>
+</header>
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
+            <ul class="nav nav-pills flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Algorithm <span class="badge badge-secondary">New</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">SQL Exercise <span class="badge badge-secondary">Coming soon</span></a>
+                </li>
+            </ul>
+
+        </nav>
+
+        <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+            <h1>Dashboard</h1>
+
+            <section id = "progressBar" class="row text-center placeholders" style="display:none;">
+                <div class="col-6 col-sm-3 placeholder">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+                    <h4>Label</h4>
+                    <div class="text-muted">Something else</div>
+                </div>
+                <div class="col-6 col-sm-3 placeholder">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+                    <h4>Label</h4>
+                    <span class="text-muted">Something else</span>
+                </div>
+                <div class="col-6 col-sm-3 placeholder">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+                    <h4>Label</h4>
+                    <span class="text-muted">Something else</span>
+                </div>
+                <div class="col-6 col-sm-3 placeholder">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+                    <h4>Label</h4>
+                    <span class="text-muted">Something else</span>
+                </div>
+            </section>
+
+            <h2>Problem List</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Acceptance</th>
+                        <th>Difficulty</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1,001</td>
+                        <td>Lorem</td>
+                        <td>ipsum</td>
+                        <td>dolor</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</div>
 <div class="modal fade" id="signUpModal">
     <div class="modal-dialog">
         <div class="modal-content">
