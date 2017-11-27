@@ -39,14 +39,14 @@ def getProblemList():
         data = cursor.fetchall()
         userProgress = getUserProgress(cursor, userID)
         cursor.close()
-        response = make_response(jsonify(problemSet=data, userProgress=userProgress))
+        response = make_response(jsonify(code = '200', problemSet=data, progress=userProgress))
         response = set_header(response)
         if len(userID) > 0 and userID > 0:
             response = set_cookie(response, token, userID, username)
         return response
     except Exception as e:
         print(e)
-        response = make_response(jsonify(code = '203'))
+        response = make_response(jsonify(code = '202'))
         response = set_header(response)
         return response
 
